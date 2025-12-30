@@ -284,4 +284,16 @@ watch(() => prizeList.value, (val: IPrizeConfig[]) => {
   </div>
 </template>
 
+<!-- 在 PrizeConfig.vue 的 <ul> 循环内，添加以下 label -->
+<label class="w-full max-w-xs mb-10 form-control" v-if="item.name === '特等奖'">
+  <div class="label">
+    <span class="label-text">指定中奖者</span>
+  </div>
+  <input
+    v-model="item.designatedWinner"
+    type="text"
+    placeholder="输入指定中奖者姓名"
+    class="w-full max-w-xs input-sm input input-bordered"
+  >
+</label>
 <style lang='scss' scoped></style>
