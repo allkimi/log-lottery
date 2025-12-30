@@ -51,3 +51,9 @@ export interface IImage {
   name: string
   url: string
 }
+
+export interface IPrizeConfig {
+  id: string;
+  name: string;
+  designatedWinner?: string; // 新增：指定中奖者姓名（仅用于特等奖）
+}
