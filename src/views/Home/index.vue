@@ -1137,3 +1137,37 @@ strong {
     }
 }
 </style>
+
+// src/views/Home/index.vue
+function startLottery() {
+  // ...原有验证逻辑
+
+  // 初始化人员池
+  personPool.value = currentPrize.value.isAll ? notThisPrizePersonList.value : notPersonList.value;
+
+  // 新增：处理特等奖指定中奖者
+  if (currentPrize.value.name === '特等奖' && currentPrize.value.designatedWinner) {
+    const targetPerson = personPool.value.find(person => 
+      person.name.trim() === currentPrize.value.designatedWinner!.trim()
+    );
+    if (targetPerson) {
+      // 清空原有随机选中逻辑，直接指定该人员
+      luckyTargets.value = [targetPerson];
+      // 从人员池中移除，避免重复中奖
+      personPool.value = personPool.value.filter(p => p.id !== targetPerson.id);
+    } else {
+      toast.open({
+        message: `未找到指定中奖者：${currentPrize.value.designatedWinner}`,
+        type: 'error',
+        position: 'top-right'
+      });
+      return;
+    }
+  } else {
+    // 原有随机抽奖逻辑（保持不变）
+    let leftover = currentPrize.value.count - currentPrize.value.isUsedCount;
+    // ...后续随机抽取代码
+  }
+
+  // ...后续抽奖流程
+}
